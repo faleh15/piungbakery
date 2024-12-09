@@ -21,7 +21,7 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <li class="nav-item {{Request::is('admin/posts*') ? 'menu-is-opening menu-open' : ''}}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>
@@ -31,13 +31,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../../index.html" class="nav-link">
+                <a href="/admin/posts/blog" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Blog</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../../index2.html" class="nav-link">
+                <a href="/admin/posts/kategori" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Kategori</p>
                 </a>
@@ -53,6 +53,14 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="/admin/catalog" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Catalog
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="../widgets.html" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
@@ -60,16 +68,16 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="../widgets.html" class="nav-link">
+          <li class="nav-item {{Request::is('admin/pesan*') ? 'active' : ''}}">
+            <a href="/admin/pesan" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Contact
+                Pesan
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="../widgets.html" class="nav-link {{Request::is('admin/user*') ? 'active' : ''}}">
+            <a href="/admin/banner" class="nav-link {{Request::is('admin/banner*') ? 'active' : ''}}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Banner
