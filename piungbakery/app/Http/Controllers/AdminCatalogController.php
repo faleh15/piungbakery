@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Catalog;
 use Illuminate\Http\Request;
+use App\Models\Catalog;
 use Illuminate\Support\Facades\Hash;
 
 class AdminCatalogController extends Controller
@@ -44,21 +44,24 @@ class AdminCatalogController extends Controller
         // dd($request->all());
         $data = $request->validate(
             [
-                'name' => 'required',
+                'produk' => 'required',
                 'desc' => 'required',
-                'gambar' => 'required', // Tambahkan validasi gambar
+                // 'urutan' => 'required',
+                'gambar' => 'required',
             ]
             );
+        $data['urutan'] = 0;
 
-        $data['password'] = Hash::make($data['password']);
+            if($request->hasFile('gambar')){
+            $gambar = $request->file('gambar');
+            $file_name = time() . '-' . $gambar->getClientOriginalName();
 
-        if ($request->hasFile('gambar')) {
-        $gambar = $request->file('gambar');
-        $file_name = time() . '-' . $gambar->getClientOriginalName();
-        $file_path = $gambar->storeAs('uploads/banners', $file_name, 'public'); // Simpan dengan Storage Laravel
-        $data['gambar'] = $file_path; // Simpan path ke database
-    }
-
+            $storage = 'uploads/produk/';
+            $gambar->move($storage, $file_name);
+            $data['gambar'] = $storage . $file_name;
+            }else{
+            $data['gambar'] = null;
+            }
 
             Catalog::create($data);
         return redirect('/admin/catalog');
@@ -92,20 +95,32 @@ class AdminCatalogController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $catalog = Catalog::find($id);
          $data = $request->validate(
             [
-                'name' => 'required',
-                'email' => 'required',
-                // 'password' => 'required|min:8',
-                're_password' => 'same:password',
+                'produk' => 'required',
+                'desc' => 'required',
+                // 'urutan' => 'required',
+                // 'gambar' => 'required',
             ]
             );
-        $catalog = Catalog::find($id);
-        if ($request->password){
-            $data['password'] = Hash::make($data['password']);
-        }else{
-            $data['password'] = $catalog->password;
-        }
+        $data['urutan'] = 0;
+
+            if($request->hasFile('gambar')){
+            $gambar = $request->file('gambar');
+
+                if($catalog->gambar != null){
+                unlink($catalog->gambar);
+                }
+
+            $file_name = time() . '-' . $gambar->getClientOriginalName();
+
+            $storage = 'uploads/produk/';
+            $gambar->move($storage, $file_name);
+            $data['gambar'] = $storage . $file_name;
+            }else{
+            $data['gambar'] = $catalog->gambar;
+            }
 
         $catalog->update($data);
         return redirect('/admin/catalog');
@@ -118,6 +133,11 @@ class AdminCatalogController extends Controller
     {
         //
         $catalog = Catalog::find($id);
+
+        if($catalog->gambar != null){
+                unlink($catalog->gambar);
+                }
+
         $catalog->delete();
         return redirect('/admin/catalog');
     }

@@ -7,7 +7,7 @@
                         @method('PUT')
                         @csrf
                 @else
-                    <form action="/admin/banner" method="POST" enctype="multipart/form-data">
+                    <form action="/admin/banner" method="POST">
                         @csrf
                 @endif
                     <div class="form-group">

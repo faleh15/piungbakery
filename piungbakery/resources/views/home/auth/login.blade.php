@@ -6,10 +6,17 @@
 
                 <div class="text-center"><strong><h4>LOGIN</h4></strong></div>
                 <p class="text">Masuk untuk mengakses WEB</p>
-                    <form action="">
+
+                @if (session()->has('loginError'))
+                    <div class="alert alert-danger">{{ session('loginError') }}</div>
+                @endif
+
+                
+                    <form action="/login/do" method="POST">
+                        @csrf
                         <div class="form-group">
-                            <label for=""><b>Username</b></label>
-                            <input type="text" name="name"class="form-control" placeholder="Username">
+                            <label for=""><b>E-Mail</b></label>
+                            <input type="text" name="email" class="form-control" placeholder="example@example.com">
                         </div>
 
                         <div class="form-group mt-3">
