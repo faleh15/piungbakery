@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminAboutController;
+use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminBannerController;
+use App\Http\Controllers\AdminCatalogController;
+use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -45,35 +50,21 @@ Route::get('/catalog', function () {
     return view('home.layouts.wrapper', $data);
 });
 
-Route::get('/login', function () {
-    $data = [
-        'content' => 'home/auth/login'
-    ];
-    return view('home.layouts.wrapper', $data);
-});
+Route::get('/login', [AdminAuthController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login/do', [AdminAuthController::class, 'doLogin']);
 
 // ADMIN PAGE
 
-Route::prefix('/admin')->group(function () {
-    Route::get('/user', function () {
-        $data = [
-            'content' => '/admin/user/index'
-        ];
+Route::prefix('/admin')->middleware('auth')->group(function () {
 
-        return view('admin.layouts.wrapper', $data);
-    });
+    Route::get('logout', [AdminAuthController::class, 'logout']);
 
-    Route::resource('/user', AdminUserController::class);
-});
+    Route::get('/dashboard', [AdminDashboardController::class, 'index']);
 
-Route::prefix('/admin')->group(function () {
-    Route::get('/dashboard', function () {
-        $data = [
-            'content' => '/admin/dashboard/index'
-        ];
+    Route::get('/about', [AdminAboutController::class, 'index']);
+    Route::put('/about/update', [AdminAboutController::class, 'update']);
 
-        return view('admin.layouts.wrapper', $data);
-    });
-
+    Route::resource('/catalog', AdminCatalogController::class);
+    Route::resource('/banner', AdminBannerController::class);
     Route::resource('/user', AdminUserController::class);
 });
