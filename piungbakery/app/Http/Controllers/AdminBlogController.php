@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 
+<<<<<<< Updated upstream
 use App\Models\Blog;
 use Illuminate\Http\Request;
+=======
+use Illuminate\Http\Request;
+use App\Models\Blog;
+>>>>>>> Stashed changes
 
 class AdminBlogController extends Controller
 {
@@ -48,6 +53,7 @@ class AdminBlogController extends Controller
     ]);
 
     // Upload cover
+<<<<<<< Updated upstream
     if ($request->hasFile('cover')) {
         $cover = $request->file('cover');
         $file_name = time() . '-' . $cover->getClientOriginalName();
@@ -57,6 +63,20 @@ class AdminBlogController extends Controller
 
     // Simpan data ke database
     blog::create($data);
+=======
+    if($request->hasFile('cover')){
+            $cover = $request->file('cover');
+            $file_name = time() . '-' . $cover->getClientOriginalName();
+
+            $storage = 'uploads/blogs/';
+            $cover->move($storage, $file_name);
+            $data['cover'] = $storage . $file_name;
+            }else{
+            $data['cover'] = null;
+            }
+
+            Blog::create($data);
+>>>>>>> Stashed changes
 
     return redirect('/admin/posts/blog')->with('success', 'blog berhasil ditambahkan!');
 }
@@ -100,7 +120,11 @@ class AdminBlogController extends Controller
     $data = $request->validate([
         'title' => 'required',
         'body' => 'required',
+<<<<<<< Updated upstream
         'cover' => 'required',
+=======
+        'cover' => 'nullable',
+>>>>>>> Stashed changes
     ]);
 
     // Upload cover baru jika ada

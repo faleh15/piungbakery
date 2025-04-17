@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('headline')->nullable;
             $table->string('desc')->nullable;
+            $table->text('gambar');
             $table->integer('urutan');
             $table->timestamps();
         });

@@ -2,12 +2,13 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
+
                 @if (isset ($banner))
                     <form action="/admin/banner/{{ $banner->id }}" method="POST" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
                 @else
-                    <form action="/admin/banner" method="POST">
+                    <form action="/admin/banner" method="POST" enctype="multipart/form-data">
                         @csrf
                 @endif
                     <div class="form-group">
@@ -30,7 +31,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Gambar</label>
-                        <input type="file" name="gambar" class="form-control @error('gambar') is-invalid @enderror()">
+                        <input type="file" name="gambar" class="form-control @error('gambar') is-invalid @enderror()" value="{{ isset($catalog) ? $catalog->gambar : old('gambar') }}">
                         @error('gambar')
                             <div class="invalid-feedback">
                                 {{ $message }}

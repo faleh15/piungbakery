@@ -15,7 +15,11 @@ class AdminPesanController extends Controller
         //
         $data = [
             'title' => 'Manajemen Pesan',
+<<<<<<< Updated upstream
             'pesan' => pesan::get(),
+=======
+            'pesan' => pesan::orderBy('created_at', 'desc')->get(),
+>>>>>>> Stashed changes
             'content' => 'admin/pesan/index'
             ];
     return view('admin.layouts.wrapper', $data);
@@ -43,9 +47,19 @@ class AdminPesanController extends Controller
     public function show(string $id)
     {
         //
+<<<<<<< Updated upstream
         $data = [
             'title' => 'Manajemen Pesan',
             //'pesan' => pesan::find($id),
+=======
+        $pesan = Pesan::find($id);
+        $pesan->is_read = 1;
+        $pesan->save();
+
+        $data = [
+            'title' => 'Manajemen Pesan',
+            'pesan' => pesan::find($id),
+>>>>>>> Stashed changes
             'content' => 'admin/pesan/show'
             ];
     return view('admin.layouts.wrapper', $data);
@@ -73,5 +87,11 @@ class AdminPesanController extends Controller
     public function destroy(string $id)
     {
         //
+<<<<<<< Updated upstream
+=======
+        $pesan = Pesan::find($id);
+        $pesan->delete();
+        return redirect('/admin/pesan');
+>>>>>>> Stashed changes
     }
 }

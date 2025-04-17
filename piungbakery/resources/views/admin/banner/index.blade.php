@@ -19,7 +19,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                <img src="{{ asset('storage/' . $item->gambar) }}" width="200px" alt="Gambar Banner">
+                                <img src="/{{ $item->gambar }}" width="200px" alt="Gambar Banner">
                             </td>
                             <td>{{ $item->headline }}</td>
                             <td>

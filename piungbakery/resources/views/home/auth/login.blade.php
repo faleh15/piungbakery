@@ -1,3 +1,8 @@
+<style>
+    .btn-login{
+        background-color: #E5E1DA;
+    }
+</style>
 <div class="container">
     <div class="row">
         <div class="col-mdd-6">
@@ -24,7 +29,7 @@
                             <input type="password" name="password" class="form-control" placeholder="********">
                         </div>
 
-                        <button class="btn btn-success mt-4 px-4">Login</button>
+                        <button class="btn btn-login mt-4 px-4">Login</button>
                     </form>
                 </div>
             </div>

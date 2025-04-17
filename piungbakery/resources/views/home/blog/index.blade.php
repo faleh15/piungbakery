@@ -5,23 +5,19 @@
     </div>
 
     <div class="row">
-        @for ($i = 1; $i <= 12; $i++)
-        <div class="col-md-3 col-sm-6 my-3">
+        @foreach ($blog as $item)
+        <div class="col-md-3 my-3">
             <div class="card shadow-sm">
-                <div class="wrapper-card-blog">
-                    <img src="/img/new-cookie.jpg" alt="" class="img-card-blog img-fluid">
+                <div class="wrapper card blog">
+                    <img src="/{{$item->cover}}" class="img-card-blog" alt="">
                 </div>
                 <div class="p-3">
-                    <a href="#" class="text-decoration-none">
-                        <h5>Resep Cookies Viral Terbaru</h5>
-                    </a>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, voluptatem!
-                        <a href="#">Selengkapnya &RightArrow;</a>
-                    </p>
+                    <a href="/blog/show/{{$item->id}}" class="text-decoration-none"><h5>{{$item->title}}</h5></a>
+                    <p>{!! Illuminate\Support\Str::limit($item->body, 100)!!}</p>
+                    <a href="/blog/show/{{$item->id}}">Selengkapnya &RightArrow;</a>
                 </div>
             </div>
         </div>
-        @endfor
+        @endforeach
     </div>
 </div>

@@ -33,7 +33,11 @@
 
                     <div class="form-group">
                         <label for="">Cover</label>
+<<<<<<< Updated upstream
                         <input type="file" name="cover" class="form-control @error('cover') is-invalid @enderror()" placeholder="******">
+=======
+                        <input type="file" name="cover" class="form-control @error('cover') is-invalid @enderror()" placeholder="******" value="{{ isset($blog) ? $blog->cover : old('cover') }}">
+>>>>>>> Stashed changes
                         @error('cover')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -43,10 +47,15 @@
                         @if (isset ($blog))   
                             <img src="/{{$blog -> cover}}" width="100%" alt="">
                         @endif
+<<<<<<< Updated upstream
                     </div>
 
                     
 
+=======
+                        
+                    </div>
+>>>>>>> Stashed changes
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
             </div>

@@ -68,7 +68,11 @@
               </p>
             </a>
           </li>
+<<<<<<< Updated upstream
           <li class="nav-item {{Request::is('admin/pesan*') ? 'active' : ''}}">
+=======
+          <li class="nav-item">
+>>>>>>> Stashed changes
             <a href="/admin/pesan" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>

@@ -57,6 +57,7 @@ class AdminCatalogController extends Controller
             $file_name = time() . '-' . $gambar->getClientOriginalName();
 
             $storage = 'uploads/produk/';
+
             $gambar->move($storage, $file_name);
             $data['gambar'] = $storage . $file_name;
             }else{

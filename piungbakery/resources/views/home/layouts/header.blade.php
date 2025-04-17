@@ -1,7 +1,16 @@
 <style>
-  .menu-active{
+  .menu-active {
     color: black;
     font-weight: bold;
+  }
+
+  /* Mengubah warna latar belakang navbar */
+  .navbar {
+    background-color: #C6E7FF !important;
+  }
+
+  .btn-login {
+    background-color: #F1F0E8 !important;
   }
 </style>
 
@@ -9,7 +18,7 @@
 
 <header>
   <!-- Fixed navbar -->
-  <nav class="navbar navbar-expand-md navbar-light bg-light shadow">
+  <nav class="navbar navbar-expand-md navbar-light shadow">
     <div class="container">
       <a class="navbar-brand" href="#">Piung Bakery</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,12 +33,12 @@
             <a class="nav-link {{ Request::is('blog') ? 'menu-active' : ''}}" href="/blog">Blog</a>
           </li>
           <li class="nav-item">
-            <li class="nav-item">
-              <a class="nav-link {{ Request::is('catalog') ? 'menu-active' : ''}}" href="/catalog">Catalog</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {{ Request::is('shop') ? 'menu-active' : ''}}" href="/shop">Shop</a>
-            </li>
+            <a class="nav-link {{ Request::is('catalog') ? 'menu-active' : ''}}" href="/catalog">Catalog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ Request::is('shop') ? 'menu-active' : ''}}" href="/shop">Shop</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link {{ Request::is('about') ? 'menu-active' : ''}}" href="/about">About</a>
           </li>
           <li class="nav-item">
@@ -39,7 +48,7 @@
         <form class="d-flex">
 
         @auth
-        <a href="/admin/dashboard" class="btn btn-primary mx-3"><i class="fas fa-user"></i>Dashboard</a>
+        <a href="/admin/dashboard" class="btn btn-login mx-3"><i class="fas fa-user mx-1"></i>Dashboard</a>
         @else
         <a href="/login" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>Login</a>
         @endauth

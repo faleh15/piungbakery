@@ -41,25 +41,31 @@ class AdminBannerController extends Controller
     public function store(Request $request)
 {
     // Validasi input
-    $data = $request->validate([
+    $data = $request->validate(
+        [
         'headline' => 'required',
         'desc' => 'required',
-        'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Tambahkan validasi gambar
+        'gambar' => 'required',
     ]);
 
     $data['urutan'] = 0;
 
     // Upload gambar
     if ($request->hasFile('gambar')) {
-        $gambar = $request->file('gambar');
-        $file_name = time() . '-' . $gambar->getClientOriginalName();
-        $file_path = $gambar->storeAs('uploads/banners', $file_name, 'public'); // Simpan dengan Storage Laravel
-        $data['gambar'] = $file_path; // Simpan path ke database
-    }
+    $gambar = $request->file('gambar');
+    $file_name = time() . '-' . $gambar->getClientOriginalName();
 
-    // Simpan data ke database
+    $storage = 'uploads/banners/';
+
+    // Pindahkan file
+    $gambar->move($storage, $file_name);
+    $data['gambar'] = $storage . $file_name; // Simpan path relatif ke database
+} else {
+    $data['gambar'] = null;
+}
+
+
     Banner::create($data);
-
     return redirect('/admin/banner')->with('success', 'Banner berhasil ditambahkan!');
 }
 
@@ -96,31 +102,30 @@ class AdminBannerController extends Controller
     $data = $request->validate([
         'headline' => 'required',
         'desc' => 'required',
-        'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Gambar opsional
+        'gambar' => 'nullable', // Gambar opsional
     ]);
 
     // Update urutan
     $data['urutan'] = $banner->urutan;
 
     // Upload gambar baru jika ada
-    if ($request->hasFile('gambar')) {
-        // Hapus file lama jika ada
-        if ($banner->gambar && file_exists(public_path($banner->gambar))) {
-            unlink(public_path($banner->gambar)); // Hapus gambar lama dari direktori public
-        }
+    if($request->hasFile('gambar')){
+            $gambar = $request->file('gambar');
 
-        $gambar = $request->file('gambar');
-        $file_name = time() . '-' . $gambar->getClientOriginalName();
-        $file_path = $gambar->storeAs('uploads/banners', $file_name, 'public'); // Simpan gambar baru
+                if($banner->gambar != null){
+                unlink($banner->gambar);
+                }
 
-        $data['gambar'] = 'storage/' . $file_path; // Menyimpan path relatif
-    } else {
-        // Jika gambar tidak diubah, gunakan gambar lama
-        $data['gambar'] = $banner->gambar;
-    }
+            $file_name = time() . '-' . $gambar->getClientOriginalName();
 
-    // Update data
-    $banner->update($data);
+            $storage = 'uploads/produk/';
+            $gambar->move($storage, $file_name);
+            $data['gambar'] = $storage . $file_name;
+            }else{
+            $data['gambar'] = $banner->gambar;
+            }
+
+        $banner->update($data);
 
     return redirect('/admin/banner')->with('success', 'Banner berhasil diperbarui!');
 }

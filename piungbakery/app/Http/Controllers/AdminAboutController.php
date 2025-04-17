@@ -28,7 +28,7 @@ class AdminAboutController extends Controller
     $data = $request->validate([
         'name' => 'required',
         'desc' => 'required',
-        'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'cover' => 'nullable',
     ]);
 
     if ($request->hasFile('cover')) {
